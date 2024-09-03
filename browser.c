@@ -80,22 +80,39 @@ int main() {
     initStack(&forwardStack);
 
     while (1) {
-        printf("\nEnter a command (visit/back/forward/exit): ");
-        scanf("%s", command);
+        printf("\nEnter URL (or type 'exit' to quit): ");
+        scanf("%s", inputURL);
 
-        if (strcmp(command, "visit") == 0) {
-            printf("Enter URL to visit: ");
-            scanf("%s", inputURL);
-            visitPage(&backStack, &forwardStack, currentURL, inputURL);
-        } else if (strcmp(command, "back") == 0) {
-            goBack(&backStack, &forwardStack, currentURL);
-        } else if (strcmp(command, "forward") == 0) {
-            goForward(&backStack, &forwardStack, currentURL);
-        } else if (strcmp(command, "exit") == 0) {
+        if (strcmp(inputURL, "exit") == 0) {
             printf("Exiting browser...\n");
             break;
-        } else {
-            printf("Invalid command. Please use visit, back, forward, or exit.\n");
+        }
+
+        visitPage(&backStack, &forwardStack, currentURL, inputURL);
+
+        while (1) {
+            printf("\nOptions: \n");
+            printf("1. Enter another URL\n");
+            printf("2. Go Back\n");
+            printf("3. Go Forward\n");
+            printf("4. Exit\n");
+            printf("Enter your choice: ");
+            scanf("%s", command);
+
+            if (strcmp(command, "1") == 0) {
+                printf("Enter URL: ");
+                scanf("%s", inputURL);
+                visitPage(&backStack, &forwardStack, currentURL, inputURL);
+            } else if (strcmp(command, "2") == 0) {
+                goBack(&backStack, &forwardStack, currentURL);
+            } else if (strcmp(command, "3") == 0) {
+                goForward(&backStack, &forwardStack, currentURL);
+            } else if (strcmp(command, "4") == 0) {
+                printf("Exiting browser...\n");
+                return 0;
+            } else {
+                printf("Invalid option. Please enter 1, 2, 3, or 4.\n");
+            }
         }
     }
 
