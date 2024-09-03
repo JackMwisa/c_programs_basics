@@ -24,12 +24,16 @@ int isFull(Stack* stack) {
 void push(Stack* stack, const char* url) {
     if (!isFull(stack)) {
         strcpy(stack->urls[++stack->top], url);
+    } else {
+        printf("Stack is full, cannot push URL: %s\n", url);
     }
 }
 
 void pop(Stack* stack, char* url) {
     if (!isEmpty(stack)) {
         strcpy(url, stack->urls[stack->top--]);
+    } else {
+        printf("Stack is empty, cannot pop URL.\n");
     }
 }
 
