@@ -106,12 +106,14 @@ void nextSong(Playlist* playlist) {
     }
 }
 
+
 // Function to navigate to the previous song
 void previousSong(Playlist* playlist) {
     if (playlist->current == playlist->head) {
         printf("You are at the start of the playlist.\n");
         return;
     }
+
     
     Song* temp = playlist->head;
     while (temp != NULL && temp->next != playlist->current) {
