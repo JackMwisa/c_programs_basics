@@ -1,43 +1,88 @@
-public class QuickBest {
+package develhope;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-    // postcondition: a[lo..hi] is best-case input for quicksorting that subarray
-    private static void best(int[] a, int lo, int hi) {
-
-        // precondition:  a[lo..hi] contains keys lo to hi, in order
-        for (int i = lo; i <= hi; i++)
-            assert a[i] == i;
-
-        if (hi <= lo) return;
-        int mid = lo + (hi - lo) / 2;
-        best(a, lo, mid-1);
-        best(a, mid+1, hi);
-        exch(a, lo, mid);
-    }
-
-    public static int[] best(int n) {
-        int[] a = new int[n];
-        for (int i = 0; i < n; i++)
-            a[i] = i;
-        best(a, 0, n-1);
-        return a;
-    }
-
-    // exchange a[i] and a[j]
-    private static void exch(int[] a, int i, int j) {
-        int swap = a[i];
-        a[i] = a[j];
-        a[j] = swap;
-    }
-
+public class SplitIntegerListIntoTwoEqualParts {
 
     public static void main(String[] args) {
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        int n = Integer.parseInt(args[0]);
-        int[] a = best(n);
-        for (int i = 0; i < n; i++)
-            // StdOut.println(a[i]);
-            StdOut.print(alphabet.charAt(a[i]));
-        StdOut.println();
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user for input or choose default
+        System.out.print("Do you want to input numbers yourself? (yes/no): ");
+        String userChoice = scanner.nextLine();
+
+        ArrayList<Integer> numbers = new ArrayList<>();
+
+        if (userChoice.equalsIgnoreCase("yes")) {
+            int count;
+
+            // Capture count (even) of elements in the list and validate that it's even
+            while (true) {
+                System.out.print("Type in the (even) number of elements: ");
+                count = scanner.nextInt();
+                
+                // Verify count is even
+                if (count % 2 == 0) {
+                    break;  // Break loop if count is even
+                } else {
+                    System.out.println("The number of elements must be even. Please try again.");
+                }
+            }
+
+            // Input: elements of the ArrayList
+            System.out.println("Please enter the integers one by one (if fewer than " + count + " are entered, remaining will be filled with 0s):");
+            for (int i = 0; i < count; i++) {
+                if (scanner.hasNextInt()) {
+                    numbers.add(scanner.nextInt());
+                } else {
+                    // Fill remaining elements with 0s
+                    numbers.add(0);
+                }
+            }
+
+            // If user entered fewer elements, fill the remaining with 0
+            while (numbers.size() < count) {
+                numbers.add(0);
+            }
+
+        } else {
+            // Default hardcoded list (as in the ArrayListSplitter example)
+            numbers.add(1);
+            numbers.add(2);
+            numbers.add(3);
+            numbers.add(4);
+            numbers.add(5);
+            numbers.add(6);
+            numbers.add(7);
+            numbers.add(8);
+
+            System.out.println("Using default list: " + numbers);
+        }
+
+        // Store input in ArrayList and print the entire list
+        System.out.println("You entered: " + numbers);
+
+        // Call the split function
+        splitAndPrintList(numbers);
+
+        // Cleanup by closing the scanner
+        scanner.close();
+    }
+
+    public static void splitAndPrintList(ArrayList<Integer> list) {
+        if (list == null || list.size() % 2 != 0) {
+            System.out.println("Error: The list must have an even number of elements.");
+            return;
+        }
+
+        int midpoint = list.size() / 2;
+
+        // Create the two halves
+        ArrayList<Integer> firstHalf = new ArrayList<>(list.subList(0, midpoint));
+        ArrayList<Integer> secondHalf = new ArrayList<>(list.subList(midpoint, list.size()));
+
+        // Print both halves
+        System.out.println("First half: " + firstHalf);
+        System.out.println("Second half: " + secondHalf);
     }
 }
-
