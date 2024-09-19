@@ -1,6 +1,7 @@
 public class Person {
     // Private fields
     private String name;
+    
     private int age;
 
     // Static field to keep track of the total number of Person objects
